@@ -26,14 +26,14 @@ export const createLink = async (req, res) => {
 
 // Fetch public links for the supplied username.
 // The request should include a `username` param in the URL path.
-export const getLinks = async (req, res) => {
+export const getLinkByUsername = async (req, res) => {
   try {
     const { username } = req.params;
     if (!username)
       return res.status(400).json({ message: "username is required" });
 
     // Find the target user by username before loading their links.
-    const user = await userModel.findOne({ username });
+    const user = await userModel.findOne({ username }).select("-clickCount");
 
     if (!user) return res.status(400).json("invalid username");
 
@@ -63,3 +63,17 @@ export const removeLink = async (req, res) => {
     res.status(500).json({ message: "error deleting link" });
   }
 };
+
+// export const countClick = async (req, res) => {
+//   try {
+//     const { linkId } = req.params;
+//     const link = await linkModel.findById(linkId);
+//     if (!link) return res.status(404).json({ message: "link not found" });
+//     link.clickCount += 1;
+//     await link.save();
+
+//     return res.json({ message: "click count increased", link });
+//   } catch (error) {
+//     return res.status(500).json({ message: "error adding clicks" });
+//   }
+// };

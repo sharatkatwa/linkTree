@@ -22,6 +22,12 @@ export const signupValidator = [
     .withMessage("Enter a valid email address")
     .normalizeEmail(),
 
+  body("bio")
+    .optional()
+    .trim()
+    .isLength({ min: 10, max: 200 })
+    .withMessage("min:20 and max: 200 charecters allowed"),
+
   body("password")
     .notEmpty()
     .withMessage("Password is required")

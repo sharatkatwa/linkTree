@@ -73,3 +73,21 @@ export const login = async (req, res) => {
     res.status(500).json({ message: "Server error during login" });
   }
 };
+
+export const logout = async (req, res) => {
+  try {
+    res.clearCookies("token", cookieOptions);
+    return res.status(200).json({
+      success: true,
+      message: "User logged out successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "error logging out" });
+  }
+};
+
+export const getMe = async (req, res) => {
+  res
+    .status(200)
+    .json({ message: "user fetched successfully", user: req.user });
+};

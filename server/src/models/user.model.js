@@ -24,9 +24,18 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    bio: {
+      type: String,
+      min: 4,
+      max: 200,
+    },
     links: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Links",
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
   },
   {

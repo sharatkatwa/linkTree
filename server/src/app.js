@@ -9,6 +9,7 @@ const app = e();
 
 app.use(e.json());
 app.use(cookieParser());
+app.set("trust proxy", true);
 app.use(
   cors({
     origin: env.CORS_ORIGIN.split(",").map((origin) => origin.trim()),
