@@ -9,6 +9,13 @@ const generateToken = (userId) => {
   });
 };
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: env.NODE_ENV === "development" ? false : true,
+  sameSite: env.NODE_ENV === "development" ? "lax" : "none",
+  maxAge: 2 * 60 * 60 * 1000,
+};
+
 export const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -25,9 +32,8 @@ export const register = async (req, res) => {
 
     const user = await User.create({ username, email, password });
     const token = generateToken(user._id);
-    
-    res.cookie('token', token)
-    
+
+    res.cookie("token", token, cookieOptions);
 
     return res.status(201).json({
       user: {
@@ -52,8 +58,8 @@ export const login = async (req, res) => {
     }
 
     const token = generateToken(user._id);
-    
-    res.cookie('token', token)
+
+    res.cookie("token", token, cookieOptions);
 
     return res.status(200).json({
       user: {
