@@ -1,5 +1,5 @@
 import dbconnect from "./src/db/dbconnect.js";
-import app from "./src/app";
+import app from "./src/app.js";
 import env from "./config/config.js";
 
 const startServer = () => {
@@ -9,3 +9,6 @@ const startServer = () => {
     }),
   );
 };
+
+
+startServer()
