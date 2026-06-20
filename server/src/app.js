@@ -3,6 +3,7 @@ import e from "express";
 import morgan from "morgan";
 import cors from "cors";
 import allRoutes from "./routes/index.routes.js";
+import env from "../config/config.js";
 
 const app = e();
 
