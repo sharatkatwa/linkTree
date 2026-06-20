@@ -4,7 +4,8 @@ dotenv.config()
 const env = {
     PORT:process.env.PORT || 3000,
     MONGO_URI: process.env.MONGO_URI || "mongodb://localhost:27017/linktree",
-    JWT_SECRET: process.env.JWT_SECRET
+    JWT_SECRET: process.env.JWT_SECRET,
+    CORS_ORIGIN: process.env.CORS_ORIGIN
 }
 
 export default env
