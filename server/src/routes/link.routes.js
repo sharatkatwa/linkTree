@@ -1,10 +1,12 @@
 import e from 'express'
-import { createLink, getLinks } from '../controllers/link.controller.js'
+import { createLink, getLinks, removeLink } from '../controllers/link.controller.js'
+import { authMiddleware } from '../middlewares/auth.middleware.js'
 
 const router = e.Router()
 
-router.post('/', createLink)
-router.get('/', getLinks)
+router.post('/',authMiddleware, createLink)
+router.get('/:username', getLinks)
+router.delete("/:id",authMiddleware, removeLink)
 
 
 export default router

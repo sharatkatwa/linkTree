@@ -29,7 +29,7 @@ export const register = async (req, res) => {
     res.cookie('token', token)
     
 
-    res.status(201).json({
+    return res.status(201).json({
       user: {
         id: user._id,
         username: user.username,
@@ -55,7 +55,7 @@ export const login = async (req, res) => {
     
     res.cookie('token', token)
 
-    res.status(200).json({
+    return res.status(200).json({
       user: {
         id: user._id,
         username: user.username,

@@ -1,39 +1,46 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcryptjs'
+import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema({
-    username:{
-        type:String,
-        required:true,
-        unique:true
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      min: 2,
+      max: 25,
+      match: [
+        /^((?!admin|root|login|register|signup|home|links).)*$/i,
+        "Username contains restricted words.",
+      ],
     },
-    email:{
-        type: String,
-        required:true,
-        unique:true
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    password:{
-        type:String,
-        required:true,
-        unique: true
+    password: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    links:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Links"    
+    links: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Links",
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
-    }
-},{
-    timestamps:true
-})
+const userModel = mongoose.model("User", userSchema);
 
-const userModel = mongoose.model('User',userSchema)
+userSchema.pre("save", function () {
+  if (!this.isModified("password")) return;
 
+  this.password = bcrypt.hashSync(this.password, 10);
+  return;
+});
 
-userSchema.pre('save',function(){
-    if(!this.isModified('password')) return
-    
-    this.password = bcrypt.hashSync(this.password, 10)
-    return
-})
-
-export default userModel
+export default userModel;
