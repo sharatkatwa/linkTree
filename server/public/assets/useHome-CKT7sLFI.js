@@ -1,1 +1,0 @@
-import{c as e,s as t,t as n}from"./dashboard.api-BbpuMuxC.js";var r=()=>({getAllUserProfiles:async()=>(await e()).data,getUserLinks:async e=>(await t(e)).data,addUserClicks:async e=>{try{return await n(e)}catch(e){console.log(e.response?.data?.message)}}});export{r as t};

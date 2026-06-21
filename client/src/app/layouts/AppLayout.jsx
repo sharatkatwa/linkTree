@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from "react-router";
 import useAuth from "../../features/auth/hooks/useAuth";
 
 const AppLayout = () => {
   const { pathname } = useLocation();
+  const navigation = useNavigation();
   const navigate = useNavigate();
   const { getMeUser, logoutUser } = useAuth();
   const [user, setUser] = useState(null);
   const showBackButton = pathname !== "/";
+  const isPageLoading = navigation.state === "loading";
 
   useEffect(() => {
     const checkUser = async () => {
@@ -30,6 +38,12 @@ const AppLayout = () => {
 
   return (
     <>
+      {isPageLoading && (
+        <div className="fixed left-0 top-0 z-50 h-1 w-full overflow-hidden bg-zinc-200">
+          <div className="h-full w-1/2 animate-pulse bg-zinc-950" />
+        </div>
+      )}
+
       <div className="fixed right-4 top-4 z-10 flex items-center gap-2">
         {user ? (
           <>
