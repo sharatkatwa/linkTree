@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
+import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
+const {loginUser}  = useAuth()
   const {
     register,
     handleSubmit,
@@ -12,8 +15,8 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Login data:", data);
+  const onSubmit = async(data) => {
+    await loginUser(data) 
   };
 
   return (
@@ -94,9 +97,9 @@ const Login = () => {
 
         <p className="mt-6 text-center text-sm text-zinc-600">
           New here?{" "}
-          <a href="/register" className="font-medium text-zinc-950 hover:underline">
+          <Link to="/auth/register" className="font-medium text-zinc-950 hover:underline">
             Create an account
-          </a>
+          </Link>
         </p>
       </section>
     </main>

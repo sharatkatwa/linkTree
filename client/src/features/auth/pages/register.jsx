@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
+import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const Register = () => {
+  const { registerUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -8,7 +11,7 @@ const Register = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      name: "",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -17,15 +20,18 @@ const Register = () => {
 
   const password = watch("password");
 
-  const onSubmit = ({ confirmPassword, ...data }) => {
-    console.log("Register data:", data);
+  const onSubmit = async ({ confirmPassword, ...data }) => {
+    const res = await registerUser(data);
+    console.log(res);
   };
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-10 text-zinc-950">
       <section className="w-full max-w-md rounded-lg border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold tracking-tight">Create account</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Create account
+          </h1>
           <p className="mt-2 text-sm text-zinc-600">
             Start building your link profile in a few seconds.
           </p>
@@ -33,30 +39,35 @@ const Register = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div>
-            <label htmlFor="name" className="text-sm font-medium text-zinc-800">
-              Full name
+            <label htmlFor="username" className="text-sm font-medium text-zinc-800">
+              username
             </label>
             <input
-              id="name"
+              id="username"
               type="text"
-              autoComplete="name"
+              autoComplete="username"
               className="mt-2 w-full rounded-md border border-zinc-300 bg-white px-3 py-2.5 text-sm outline-none transition focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
               placeholder="Your name"
-              {...register("name", {
-                required: "Name is required",
+              {...register("username", {
+                required: "username is required",
                 minLength: {
                   value: 2,
-                  message: "Name must be at least 2 characters",
+                  message: "username must be at least 2 characters",
                 },
               })}
             />
-            {errors.name && (
-              <p className="mt-1.5 text-sm text-red-600">{errors.name.message}</p>
+            {errors.username && (
+              <p className="mt-1.5 text-sm text-red-600">
+                {errors.username.message}
+              </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="email" className="text-sm font-medium text-zinc-800">
+            <label
+              htmlFor="email"
+              className="text-sm font-medium text-zinc-800"
+            >
               Email
             </label>
             <input
@@ -74,7 +85,9 @@ const Register = () => {
               })}
             />
             {errors.email && (
-              <p className="mt-1.5 text-sm text-red-600">{errors.email.message}</p>
+              <p className="mt-1.5 text-sm text-red-600">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
@@ -121,7 +134,8 @@ const Register = () => {
               placeholder="Confirm your password"
               {...register("confirmPassword", {
                 required: "Please confirm your password",
-                validate: (value) => value === password || "Passwords do not match",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
               })}
             />
             {errors.confirmPassword && (
@@ -142,9 +156,12 @@ const Register = () => {
 
         <p className="mt-6 text-center text-sm text-zinc-600">
           Already have an account?{" "}
-          <a href="/login" className="font-medium text-zinc-950 hover:underline">
+          <Link
+            to="/auth/login"
+            className="font-medium text-zinc-950 hover:underline"
+          >
             Sign in
-          </a>
+          </Link>
         </p>
       </section>
     </main>
