@@ -2,36 +2,7 @@ import { Link } from "react-router";
 import useHome from "../hooks/useHome";
 import { useEffect, useState } from "react";
 
-const users = [
-  {
-    id: 1,
-    username: "aarav",
-    bio: "Designing useful products, systems, and calm digital experiences.",
-    links: 12,
-    initials: "AM",
-  },
-  {
-    id: 2,
-    username: "riya",
-    bio: "Building polished React interfaces and small tools for creators.",
-    links: 9,
-    initials: "RS",
-  },
-  {
-    id: 3,
-    username: "kabir",
-    bio: "Sharing notes on tech, productivity, and independent work.",
-    links: 15,
-    initials: "KK",
-  },
-  {
-    id: 4,
-    username: "nisha",
-    bio: "Curating projects, resources, and updates from my latest work.",
-    links: 7,
-    initials: "NR",
-  },
-];
+
 
 const Home = () => {
   const { getAllUserProfiles } = useHome();

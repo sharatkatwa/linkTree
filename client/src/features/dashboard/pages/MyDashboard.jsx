@@ -2,48 +2,6 @@ import { useEffect, useState } from "react";
 import useDashboard from "../hooks/useDashBoard";
 import { useForm } from "react-hook-form";
 
-const userResponse = {
-  user: {
-    username: "ankur",
-    email: "ankur@example.com",
-    bio: "Building a clean collection of useful links.",
-  },
-};
-
-const linksResponse = {
-  links: [
-    {
-      _id: "1",
-      title: "Portfolio",
-      url: "https://example.com",
-      clickCount: 42,
-    },
-    {
-      _id: "2",
-      title: "GitHub",
-      url: "https://github.com",
-      clickCount: 28,
-    },
-    {
-      _id: "3",
-      title: "LinkedIn",
-      url: "https://linkedin.com",
-      clickCount: 16,
-    },
-  ],
-};
-
-const clicksPerDayResponse = {
-  data: [
-    { date: "2026-06-15", clicks: 4 },
-    { date: "2026-06-16", clicks: 7 },
-    { date: "2026-06-17", clicks: 3 },
-    { date: "2026-06-18", clicks: 9 },
-    { date: "2026-06-19", clicks: 5 },
-    { date: "2026-06-20", clicks: 11 },
-    { date: "2026-06-21", clicks: 8 },
-  ],
-};
 
 const MyDashboard = () => {
   const {
