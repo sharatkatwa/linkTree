@@ -18,3 +18,8 @@ export const logoutApi = async () => {
   const res = await AuthApiInstance.post("/logout");
   return res;
 };
+
+export const getMeApi = async () => {
+  const res = await AuthApiInstance.get("/me");
+  return res;
+};

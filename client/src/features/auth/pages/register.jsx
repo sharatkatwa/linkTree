@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 
 const Register = () => {
   const { registerUser } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -22,7 +23,8 @@ const Register = () => {
 
   const onSubmit = async ({ confirmPassword, ...data }) => {
     const res = await registerUser(data);
-    console.log(res);
+    if(res)
+    navigate("/");
   };
 
   return (
@@ -39,7 +41,10 @@ const Register = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div>
-            <label htmlFor="username" className="text-sm font-medium text-zinc-800">
+            <label
+              htmlFor="username"
+              className="text-sm font-medium text-zinc-800"
+            >
               username
             </label>
             <input

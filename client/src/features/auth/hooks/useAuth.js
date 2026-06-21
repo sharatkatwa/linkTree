@@ -1,11 +1,11 @@
-import { loginApi, logoutApi, registerApi } from "../services/auth.api";
+import { getMeApi, loginApi, logoutApi, registerApi } from "../services/auth.api";
 
 const useAuth = () => {
   const registerUser = async (data) => {
     try {
    
       const res = await registerApi(data);
-      console.log(res);
+      return res
     } catch (error) {
       console.log(error);
     }
@@ -14,7 +14,7 @@ const useAuth = () => {
     try {
    
       const res = await loginApi(data);
-      console.log(res); 
+      return res
     } catch (error) {
       console.log(error);
     }
@@ -23,14 +23,22 @@ const useAuth = () => {
     try {
    
       const res = await logoutApi();
-      console.log(res);
+      return res;
     } catch (error) {
       console.log(error);
     }
   };
+  const getMeUser = async () => {
+    try {
+      const res = await getMeApi();
+      return res;
+    } catch (error) {
+      console.log(error.response?.data?.message);
+    }
+  };
   
   
-  return {registerUser,loginUser,logoutUser}
+  return {registerUser,loginUser,logoutUser,getMeUser}
 };
 
 export default useAuth
