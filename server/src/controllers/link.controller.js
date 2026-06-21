@@ -3,6 +3,17 @@ import userModel from "../models/user.model.js";
 
 // Create a new link for the authenticated user.
 // Expects `url` and `title` in the request body and attaches the current user ID.
+export const getAllProfiles = async (req, res) => {
+  try {
+    const users = await userModel.find().select("-password -isAdmin");
+    res
+      .status(200)
+      .json({ message: "profiles fetched successfully", data: users });
+  } catch (error) {
+    return res.status(500).json({ message: "error in fetching profiles" });
+  }
+};
+
 export const createLink = async (req, res) => {
   try {
     const { url, title } = req.body;

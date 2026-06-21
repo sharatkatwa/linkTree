@@ -1,6 +1,7 @@
 import e from "express";
 import {
   createLink,
+  getAllProfiles,
   getLinkByUsername,
   removeLink,
 } from "../controllers/link.controller.js";
@@ -14,5 +15,6 @@ const router = e.Router();
 router.post("/", authMiddleware, createLinkValidator, validate, createLink);
 router.get("/:username", getLinkByUsername);
 router.delete("/:id", authMiddleware, removeLink);
+router.get("/", getAllProfiles);
 
 export default router;
