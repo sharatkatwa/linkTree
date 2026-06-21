@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import env from "../../config/config.js";
+import linkModel from "../models/link.model.js";
 
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, env.JWT_SECRET, {
@@ -36,6 +37,7 @@ export const register = async (req, res) => {
     res.cookie("token", token, cookieOptions);
 
     return res.status(201).json({
+      message: "User Registered successfully",
       user: {
         id: user._id,
         username: user.username,
@@ -52,9 +54,9 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-
+    console.log(user);
     if (!user || !bcrypt.compareSync(password, user.password)) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email or password" });
     }
 
     const token = generateToken(user._id);
@@ -62,6 +64,7 @@ export const login = async (req, res) => {
     res.cookie("token", token, cookieOptions);
 
     return res.status(200).json({
+      message: "Login Successfully",
       user: {
         id: user._id,
         username: user.username,
@@ -76,7 +79,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.clearCookies("token", cookieOptions);
+    res.clearCookie("token", cookieOptions);
     return res.status(200).json({
       success: true,
       message: "User logged out successfully",

@@ -44,15 +44,16 @@ export const getLinkByUsername = async (req, res) => {
       return res.status(400).json({ message: "username is required" });
 
     // Find the target user by username before loading their links.
-    const user = await userModel.findOne({ username }).select("-clickCount");
-
+    const user = await userModel.findOne({ username }).select("-clickCount -password");
+    
     if (!user) return res.status(400).json("invalid username");
 
     // Only return links that are not marked as deleted.
     const links = await linkModel.find({ user: user._id, isDeleted: false });
+    
     return res
       .status(200)
-      .json({ message: "all user links fetched successufully", links });
+      .json({ message: "all user links fetched successufully", user, links });
   } catch (error) {
     // Send a generic server error if the link query fails.
     res.status(500).json({ message: "error in getting links" });

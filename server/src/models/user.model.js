@@ -43,13 +43,12 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-const userModel = mongoose.model("User", userSchema);
-
 userSchema.pre("save", function () {
   if (!this.isModified("password")) return;
 
   this.password = bcrypt.hashSync(this.password, 10);
   return;
 });
+const userModel = mongoose.model("User", userSchema);
 
 export default userModel;
