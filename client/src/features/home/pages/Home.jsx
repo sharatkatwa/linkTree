@@ -37,7 +37,7 @@ const Home = () => {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {profiles.map((user) => (
             <article
-              key={user.id}
+              key={user._id}
               className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-4">
