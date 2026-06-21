@@ -58,7 +58,6 @@ const MyDashboard = () => {
   const [myLinks, setMyLinks] = useState([]);
   const [perDayClicks, setPerDayClicks] = useState([]);
 
-  // add link inputs
   const {
     register,
     handleSubmit,
@@ -70,8 +69,6 @@ const MyDashboard = () => {
       url: "",
     },
   });
-  //   const [title, setTitle] = useState("");
-  //   const [url, setUrl] = useState("");
 
   const totalClicks = myLinks.reduce(
     (total, link) => total + (link.clickCount || 0),
@@ -81,6 +78,7 @@ const MyDashboard = () => {
 
   useEffect(() => {
     const fetchDashboardData = async () => {
+      // These requests are independent, so load them in parallel on dashboard mount.
       const [profileRes, linksRes, clicksPerDayRes] = await Promise.all([
         getMyProfile(),
         getClicks(),
@@ -93,21 +91,21 @@ const MyDashboard = () => {
     };
 
     fetchDashboardData();
-
-    return () => {
-      "unmounted dashboard";
-    };
   }, []);
 
   const handleRemoveLink = async (linkId) => {
     const res = await removeMyLinks(linkId);
     if (!res) return;
-    setMyLinks(myLinks.filter((link) => link._id !== linkId));
+
+    // Update local state instead of refetching the whole dashboard after delete.
+    setMyLinks((prevLinks) => prevLinks.filter((link) => link._id !== linkId));
   };
+
   const handleAddLink = async (data) => {
     const res = await addMyLinks(data);
     if (!res) return;
 
+    // Append the API response so the new link appears without another GET request.
     setMyLinks((prevLinks) => [res.data.data, ...prevLinks]);
     reset();
   };

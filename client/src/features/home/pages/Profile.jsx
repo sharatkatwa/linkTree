@@ -9,17 +9,15 @@ const Profile = () => {
   const [userLinks, setUserLinks] = useState([]);
 
   useEffect(() => {
-
+    // Load the public profile using the username from the route.
     getUserLinks(username).then((data) => {
       setUser(data.user);
       setUserLinks(data.links);
     });
-    
-    return () =>{console.log('profile component unmounted');}
-  }, []);
+  }, [username]);
 
-  // add clickcount to link
   const handleClickLink = (linkId, url) => {
+    // Track the click before opening the real destination in a new tab.
     addUserClicks(linkId)
       .then(() => {
         window.open(url, "_blank", "noopener,noreferrer");

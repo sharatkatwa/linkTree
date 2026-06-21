@@ -11,6 +11,7 @@ const AppLayout = () => {
 
   useEffect(() => {
     const checkUser = async () => {
+      // Check the cookie-backed session once so the navbar can show auth actions.
       const res = await getMeUser();
       setUser(res?.data?.user || null);
     };
@@ -22,6 +23,7 @@ const AppLayout = () => {
     const res = await logoutUser();
     if (!res) return;
 
+    // Clear local UI state immediately after the server clears the auth cookie.
     setUser(null);
     navigate("/");
   };
