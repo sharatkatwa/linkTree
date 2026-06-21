@@ -1,0 +1,1 @@
+import{a as e,i as t,n,r}from"./auth.api-ZSyeVpiH.js";var i=()=>({registerUser:async t=>{try{return await e(t)}catch(e){console.log(e)}},loginUser:async e=>{try{return await r(e)}catch(e){console.log(e)}},logoutUser:async()=>{try{return await t()}catch(e){console.log(e)}},getMeUser:async()=>{try{return await n()}catch(e){console.log(e.response?.data?.message)}}});export{i as t};
